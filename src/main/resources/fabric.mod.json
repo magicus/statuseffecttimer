@@ -17,11 +17,7 @@
   "icon": "assets/statuseffecttimer/icon.png",
 
   "environment": "*",
-  "entrypoints": {
-    "main": [
 
-    ]
-  },
   "mixins": [
     "statuseffecttimer.mixins.json"
   ],
