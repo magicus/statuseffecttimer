@@ -29,4 +29,4 @@ Install this as you would any other Fabric mod. (Personally, I recommend MultiMC
 Do you have any problems with the mod? Please open an issue here on Github.
 
 Currently only Minecraft 1.16.5 is supported, but it would probably be trivial to add support for other versions. 
-If you want support for another versin, please open an issue and state the requested version.
+If you want support for another version, please open an issue and state the requested version.
