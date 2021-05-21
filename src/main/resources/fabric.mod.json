@@ -10,13 +10,14 @@
   ],
   "contact": {
     "homepage": "https://github.com/magicus/statuseffecttimer",
+    "issues": "https://github.com/magicus/statuseffecttimer/issues",
     "sources": "https://github.com/magicus/statuseffecttimer"
   },
 
   "license": "LGPLv3",
   "icon": "assets/statuseffecttimer/icon.png",
 
-  "environment": "*",
+  "environment": "client",
 
   "mixins": [
     "statuseffecttimer.mixins.json"
