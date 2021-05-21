@@ -2,12 +2,18 @@
 
 This is a Minecraft mod that overlays a timer on the Vanilla status effect HUD icons.
 
-I created this since the vanilla user experience of going into the inventory, and closing the recipe book, to check the remaining time of status effects was not ... ideal.
-There are some other mods that tried to achieve this, but most are bloated replacement for large parts of vanilla code. 
-
-This is a very minimalistic mod. No settings are required nor provided.
-
 This mod requires Minecraft 1.16.5 and the Fabric loader.
+
+This mod overlays the number of seconds left of the status effect, or the number of minutes (followed by "m") if it is more than 60 seconds, on the vanilla status effect indicator. That's it. This is a very minimalistic mod. No settings are required nor provided.
+
+I created this since the vanilla user experience of going into the inventory, and closing the recipe book, to check the remaining time of status effects was .. not ideal.
+There are some other mods that tried to achieve this, but most are bloated replacement for large parts of vanilla code, and the remaining still did not keep the vanilla basics.
+
+## Screenshot
+
+This is what it looks like when you are using the mod.
+
+![Screenshot](screenshot.png?raw=true)
 
 ## Download
 
