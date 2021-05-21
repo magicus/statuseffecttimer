@@ -17,7 +17,7 @@ This is what it looks like when you are using the mod.
 
 ## Download
 
-Download locations coming soon.
+You can download the latest version here: [statuseffecttimer-1.0.0.jar](https://github.com/magicus/statuseffecttimer/releases/download/v1.0.0/statuseffecttimer-1.0.0.jar)
 
 ## Installation
 
