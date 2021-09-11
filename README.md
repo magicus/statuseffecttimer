@@ -13,6 +13,8 @@ There are some other mods that tried to achieve this, but most are bloated repla
 
 This is what it looks like when you are using the mod.
 
+![Animation](animation.gif?raw=true)
+
 ![Screenshot](screenshot.png?raw=true)
 
 ## Download
