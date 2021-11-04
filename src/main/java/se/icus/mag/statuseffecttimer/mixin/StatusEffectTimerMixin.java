@@ -6,6 +6,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -23,6 +24,8 @@ import java.util.Collection;
 @Environment(EnvType.CLIENT)
 @Mixin(InGameHud.class)
 public abstract class StatusEffectTimerMixin extends DrawableHelper {
+	public static final int TEXT_COLOR = 0x99FFFFFF;
+
 	@Shadow @Final
 	private MinecraftClient client;
 
@@ -55,8 +58,12 @@ public abstract class StatusEffectTimerMixin extends DrawableHelper {
 					}
 
 					String duration = getDurationAsString(statusEffectInstance);
-					int length = client.textRenderer.getWidth(duration);
-					drawStringWithShadow(matrices, client.textRenderer, duration, x + 13 - (length / 2), y + 14, 0x99FFFFFF);
+					int durationLength = client.textRenderer.getWidth(duration);
+					drawStringWithShadow(matrices, client.textRenderer, duration, x + 13 - (durationLength / 2), y + 14, TEXT_COLOR);
+
+					String amplifier = getAmplifierAsString(statusEffectInstance);
+					int amplifierLength = client.textRenderer.getWidth(amplifier);
+					drawStringWithShadow(matrices, client.textRenderer, amplifier, x + 22 - amplifierLength, y + 3, TEXT_COLOR);
 				}
 			}
 		}
@@ -75,5 +82,16 @@ public abstract class StatusEffectTimerMixin extends DrawableHelper {
 		} else {
 			return String.valueOf(seconds);
 		}
+	}
+
+	@NotNull
+	private String getAmplifierAsString(StatusEffectInstance statusEffectInstance) {
+	    int amplifier = statusEffectInstance.getAmplifier();
+
+	    if (amplifier > 0) {
+	        return I18n.translate("potion.potency." + amplifier);
+	    } else {
+	        return "";
+	    }
 	}
 }
