@@ -24,6 +24,8 @@ import java.util.Collection;
 @Environment(EnvType.CLIENT)
 @Mixin(InGameHud.class)
 public abstract class StatusEffectTimerMixin extends DrawableHelper {
+	public static final int TEXT_COLOR = 0x99FFFFFF;
+
 	@Shadow @Final
 	private MinecraftClient client;
 
@@ -57,11 +59,11 @@ public abstract class StatusEffectTimerMixin extends DrawableHelper {
 
 					String duration = getDurationAsString(statusEffectInstance);
 					int durationLength = client.textRenderer.getWidth(duration);
-					drawStringWithShadow(matrices, client.textRenderer, duration, x + 13 - (durationLength / 2), y + 14, 0x99FFFFFF);
+					drawStringWithShadow(matrices, client.textRenderer, duration, x + 13 - (durationLength / 2), y + 14, TEXT_COLOR);
 
 					String amplifier = getAmplifierAsString(statusEffectInstance);
 					int amplifierLength = client.textRenderer.getWidth(amplifier);
-					drawStringWithShadow(matrices, client.textRenderer, amplifier, x + 22 - amplifierLength, y + 3, 0x99FFFFFF);
+					drawStringWithShadow(matrices, client.textRenderer, amplifier, x + 22 - amplifierLength, y + 3, TEXT_COLOR);
 				}
 			}
 		}
