@@ -41,3 +41,7 @@ Do you have any problems with the mod? Please open an issue here on Github.
 
 Currently Minecraft versions 1.16.5 to 1.18.1 are supported, but it would probably be trivial to add support for other versions.
 If you want support for another version, please open an issue and state the requested version.
+
+## Known Incompatibilities
+
+This mod does not work if the mod ['Slight' Gui Modifications](https://github.com/shedaniel/slight-gui-modifications) is installed and the configuration `fluidStatusEffects` is enabled.
