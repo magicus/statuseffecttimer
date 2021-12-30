@@ -59,9 +59,13 @@ public abstract class StatusEffectTimerMixin extends DrawableHelper {
 					int durationLength = client.textRenderer.getWidth(duration);
 					drawStringWithShadow(matrices, client.textRenderer, duration, x + 13 - (durationLength / 2), y + 14, 0x99FFFFFF);
 
-					String amplifier = getAmplifierAsString(statusEffectInstance);
-					int amplifierLength = client.textRenderer.getWidth(amplifier);
-					drawStringWithShadow(matrices, client.textRenderer, amplifier, x + 22 - amplifierLength, y + 3, 0x99FFFFFF);
+					int amplifier = statusEffectInstance.getAmplifier();
+					if (amplifier > 0) {
+						// Most langages has "translations" for amplifier 1-5, converting to roman numerals
+						String amplifierString = (amplifier < 6) ? I18n.translate("potion.potency." + amplifier) : "**";
+						int amplifierLength = client.textRenderer.getWidth(amplifierString);
+						drawStringWithShadow(matrices, client.textRenderer, amplifierString, x + 22 - amplifierLength, y + 3, 0x99FFFFFF);
+					}
 				}
 			}
 		}
@@ -80,16 +84,5 @@ public abstract class StatusEffectTimerMixin extends DrawableHelper {
 		} else {
 			return String.valueOf(seconds);
 		}
-	}
-
-	@NotNull
-	private String getAmplifierAsString(StatusEffectInstance statusEffectInstance) {
-	    int amplifier = statusEffectInstance.getAmplifier();
-
-	    if (amplifier > 0) {
-	        return I18n.translate("potion.potency." + amplifier);
-	    } else {
-	        return "";
-	    }
 	}
 }
