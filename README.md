@@ -24,10 +24,12 @@ The latest version is 1.1.0.
 Direct download links for Minecraft 1.18.1:
 
 * Download from GitHub: [statuseffecttimer-1.1.0+1.18.1.jar](https://github.com/magicus/statuseffecttimer/releases/download/v1.1.0-1.18.1/statuseffecttimer-1.1.0+1.18.1.jar)
+* Download from Modrinth: [statuseffecttimer-1.1.0+1.18.1.jar](https://cdn.modrinth.com/data/T9FDHbY5/versions/1.1.0+1.18.1/statuseffecttimer-1.1.0+1.18.1.jar)
 * Download from CurseForge: [statuseffecttimer-1.1.0+1.18.1.jar](https://www.curseforge.com/minecraft/mc-mods/status-effect-timer/files/3585630)
 
 For all other Minecraft releases, check these download sites:
 * [GitHub releases](https://github.com/magicus/statuseffecttimer/releases)
+* [Modrinth versions](https://modrinth.com/mod/statuseffecttimer/versions)
 * [CurseForge](https://www.curseforge.com/minecraft/mc-mods/status-effect-timer/files)
 
 ## Installation
