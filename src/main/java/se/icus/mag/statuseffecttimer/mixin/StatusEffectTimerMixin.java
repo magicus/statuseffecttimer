@@ -21,8 +21,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Collection;
 
+// Set priority to 500, to load before default at 1000. This is to better cooperate with HUDTweaks.
 @Environment(EnvType.CLIENT)
-@Mixin(InGameHud.class)
+@Mixin(value = InGameHud.class, priority = 500)
 public abstract class StatusEffectTimerMixin extends DrawableHelper {
 	@Shadow @Final
 	private MinecraftClient client;
