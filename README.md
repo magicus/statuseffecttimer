@@ -47,3 +47,5 @@ If you want support for another version, please open an issue and state the requ
 ## Known Incompatibilities
 
 This mod does not work if the mod ['Slight' Gui Modifications](https://github.com/shedaniel/slight-gui-modifications) is installed and the configuration `fluidStatusEffects` is enabled.
+
+This mod conflicts with [Giselbaer's Durability Viewer](https://github.com/gbl/DurabilityViewer), since that mod also draws a timer on the status effect icon. You need to disable the effect time feature in Durability Viewer to avoid clutter. 
