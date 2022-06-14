@@ -23,7 +23,7 @@ The latest version is 1.1.1.
 
 Direct download links for Minecraft 1.19:
 
-* Download from GitHub: [statuseffecttimer-1.1.1+1.19.jar](https://github.com/magicus/statuseffecttimer/releases/download/v1.1.1-1.19/statuseffecttimer-1.1.1+1.19.jar)
+* Download from GitHub: [statuseffecttimer-1.1.1+1.19.jar](https://github.com/magicus/statuseffecttimer/releases/download/v1.1.1%2B1.19/statuseffecttimer-1.1.1+1.19.jar)
 * Download from Modrinth: [statuseffecttimer-1.1.1+1.19.jar](https://cdn.modrinth.com/data/T9FDHbY5/versions/1.1.1+1.19/statuseffecttimer-1.1.1%2B1.19.jar)
 * Download from CurseForge: [statuseffecttimer-1.1.1+1.19.jar](https://www.curseforge.com/minecraft/mc-mods/status-effect-timer/download/3832036)
 
