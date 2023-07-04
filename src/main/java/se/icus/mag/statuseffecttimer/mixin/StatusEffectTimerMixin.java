@@ -12,6 +12,7 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -60,10 +61,8 @@ public abstract class StatusEffectTimerMixin extends DrawableHelper {
 					int durationLength = client.textRenderer.getWidth(duration);
 					drawStringWithShadow(matrices, client.textRenderer, duration, x + 13 - (durationLength / 2), y + 14, 0x99FFFFFF);
 
-					int amplifier = statusEffectInstance.getAmplifier();
-					if (amplifier > 0) {
-						// Most langages has "translations" for amplifier 1-5, converting to roman numerals
-						String amplifierString = (amplifier < 6) ? I18n.translate("potion.potency." + amplifier) : "**";
+					String amplifierString = getAmplifierAsString(statusEffectInstance);
+					if (amplifierString != null) {
 						int amplifierLength = client.textRenderer.getWidth(amplifierString);
 						drawStringWithShadow(matrices, client.textRenderer, amplifierString, x + 22 - amplifierLength, y + 3, 0x99FFFFFF);
 					}
@@ -76,14 +75,25 @@ public abstract class StatusEffectTimerMixin extends DrawableHelper {
 	private String getDurationAsString(StatusEffectInstance statusEffectInstance) {
 		int ticks = MathHelper.floor((float) statusEffectInstance.getDuration());
 		int seconds = ticks / 20;
-
-		if (ticks > 32147) {
-			// Vanilla considers everything above this to be infinite
-			return "**";
-		} else if (seconds > 60) {
-			return seconds / 60 + "m";
-		} else {
-			return String.valueOf(seconds);
+		if (seconds >= 3600) {
+			return String.format("%dh", seconds / 3600);
+		} else if (seconds >= 60) {
+			return String.format("%.1fm", (float) (seconds / 60.0));
 		}
+		return String.format("%ds", seconds);
+	}
+
+	@Nullable
+	private String getAmplifierAsString(StatusEffectInstance statusEffectInstance) {
+		int ampl = statusEffectInstance.getAmplifier();
+		String k = String.format("potion.potency.%d", ampl);
+		if (ampl > 0) {
+			if (I18n.hasTranslation(k)) {
+				return I18n.translate(k);
+			} else {
+				return "**";
+			}
+		}
+		return null;
 	}
 }
