@@ -86,7 +86,7 @@ public abstract class StatusEffectTimerMixin extends DrawableHelper {
 	@Nullable
 	private String getAmplifierAsString(StatusEffectInstance statusEffectInstance) {
 		int ampl = statusEffectInstance.getAmplifier();
-		String k = String.format("potion.potency.%d", ampl);
+		String k = String.format("enchantment.level.%d", ampl + 1);
 		if (ampl > 0) {
 			if (I18n.hasTranslation(k)) {
 				return I18n.translate(k);
