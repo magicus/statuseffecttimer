@@ -69,13 +69,11 @@ public abstract class StatusEffectTimerMixin extends DrawableHelper {
 					}
 
 					String duration = getDurationAsString(statusEffectInstance);
-					int durationLength = client.textRenderer.getWidth(duration);
-					drawStringWithShadow(matrices, client.textRenderer, duration, x + 13 - (durationLength / 2), y + 14, 0x99FFFFFF);
+					drawCenteredTextWithShadow(matrices, client.textRenderer, duration, x + 13, y + 14, 0x99FFFFFF);
 
 					String amplifierString = getAmplifierAsString(statusEffectInstance);
 					if (amplifierString != null) {
-						int amplifierLength = client.textRenderer.getWidth(amplifierString);
-						drawStringWithShadow(matrices, client.textRenderer, amplifierString, x + 22 - amplifierLength, y + 3, 0x99FFFFFF);
+						drawCenteredTextWithShadow(matrices, client.textRenderer, amplifierString, x + 19, y + 3, 0x99FFFFFF);
 					}
 				}
 			}
@@ -84,12 +82,20 @@ public abstract class StatusEffectTimerMixin extends DrawableHelper {
 
 	@NotNull
 	private String getDurationAsString(StatusEffectInstance statusEffectInstance) {
+		if (statusEffectInstance.isInfinite()) {
+			return I18n.translate("effect.duration.infinite");
+		}
 		int ticks = MathHelper.floor((float) statusEffectInstance.getDuration());
 		int seconds = ticks / 20;
+		int hours = seconds / 3600;
+		double minutes = seconds / 60.0;
 		if (seconds >= 3600) {
-			return String.format("%dh", seconds / 3600);
+			if (hours < 1000) {
+				return String.format("%dh", hours);
+			}
+			return "****";
 		} else if (seconds >= 60) {
-			return String.format("%.1fm", (float) (seconds / 60.0));
+			return String.format("%.1fm", (float) minutes);
 		}
 		return String.format("%ds", seconds);
 	}
