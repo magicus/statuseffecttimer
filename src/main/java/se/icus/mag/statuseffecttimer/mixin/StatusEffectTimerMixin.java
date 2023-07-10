@@ -12,11 +12,13 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Collection;
@@ -27,6 +29,16 @@ import java.util.Collection;
 public abstract class StatusEffectTimerMixin extends DrawableHelper {
 	@Shadow @Final
 	private MinecraftClient client;
+
+	@Redirect(method = "renderStatusEffectOverlay",
+			at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/effect/StatusEffectInstance;shouldShowIcon()Z"))
+	private boolean display(StatusEffectInstance instance) {
+		return shouldDisplay(instance);
+	}
+
+	private boolean shouldDisplay(StatusEffectInstance instance) {
+		return true;
+	}
 
 	@Inject(method = "renderStatusEffectOverlay", at = @At("TAIL"))
 	private void renderDurationOverlay(MatrixStack matrices, CallbackInfo c) {
@@ -39,7 +51,7 @@ public abstract class StatusEffectTimerMixin extends DrawableHelper {
 			int nonBeneficialCount = 0;
 			for (StatusEffectInstance statusEffectInstance : Ordering.natural().reverse().sortedCopy(collection)) {
 				StatusEffect statusEffect = statusEffectInstance.getEffectType();
-				if (statusEffectInstance.shouldShowIcon()) {
+				if (shouldDisplay(statusEffectInstance)) {
 					int x = this.client.getWindow().getScaledWidth();
 					int y = 1;
 
@@ -57,15 +69,11 @@ public abstract class StatusEffectTimerMixin extends DrawableHelper {
 					}
 
 					String duration = getDurationAsString(statusEffectInstance);
-					int durationLength = client.textRenderer.getWidth(duration);
-					drawStringWithShadow(matrices, client.textRenderer, duration, x + 13 - (durationLength / 2), y + 14, 0x99FFFFFF);
+					drawCenteredTextWithShadow(matrices, client.textRenderer, duration, x + 13, y + 14, 0x99FFFFFF);
 
-					int amplifier = statusEffectInstance.getAmplifier();
-					if (amplifier > 0) {
-						// Most langages has "translations" for amplifier 1-5, converting to roman numerals
-						String amplifierString = (amplifier < 6) ? I18n.translate("potion.potency." + amplifier) : "**";
-						int amplifierLength = client.textRenderer.getWidth(amplifierString);
-						drawStringWithShadow(matrices, client.textRenderer, amplifierString, x + 22 - amplifierLength, y + 3, 0x99FFFFFF);
+					String amplifierString = getAmplifierAsString(statusEffectInstance);
+					if (amplifierString != null) {
+						drawCenteredTextWithShadow(matrices, client.textRenderer, amplifierString, x + 19, y + 3, 0x99FFFFFF);
 					}
 				}
 			}
@@ -74,16 +82,35 @@ public abstract class StatusEffectTimerMixin extends DrawableHelper {
 
 	@NotNull
 	private String getDurationAsString(StatusEffectInstance statusEffectInstance) {
+		if (statusEffectInstance.isInfinite()) {
+			return I18n.translate("effect.duration.infinite");
+		}
 		int ticks = MathHelper.floor((float) statusEffectInstance.getDuration());
 		int seconds = ticks / 20;
-
-		if (ticks > 32147) {
-			// Vanilla considers everything above this to be infinite
-			return "**";
-		} else if (seconds > 60) {
-			return seconds / 60 + "m";
-		} else {
-			return String.valueOf(seconds);
+		int hours = seconds / 3600;
+		double minutes = seconds / 60.0;
+		if (seconds >= 3600) {
+			if (hours < 1000) {
+				return String.format("%dh", hours);
+			}
+			return "****";
+		} else if (seconds >= 60) {
+			return String.format("%.1fm", (float) minutes);
 		}
+		return String.format("%ds", seconds);
+	}
+
+	@Nullable
+	private String getAmplifierAsString(StatusEffectInstance statusEffectInstance) {
+		int ampl = statusEffectInstance.getAmplifier();
+		String k = String.format("enchantment.level.%d", ampl + 1);
+		if (ampl > 0) {
+			if (I18n.hasTranslation(k)) {
+				return I18n.translate(k);
+			} else {
+				return "**";
+			}
+		}
+		return null;
 	}
 }
