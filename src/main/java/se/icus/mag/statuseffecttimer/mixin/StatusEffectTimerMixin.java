@@ -4,10 +4,9 @@ import com.google.common.collect.Ordering;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.util.math.MathHelper;
@@ -26,7 +25,7 @@ import java.util.Collection;
 // Set priority to 500, to load before default at 1000. This is to better cooperate with HUDTweaks.
 @Environment(EnvType.CLIENT)
 @Mixin(value = InGameHud.class, priority = 500)
-public abstract class StatusEffectTimerMixin extends DrawableHelper {
+public abstract class StatusEffectTimerMixin {
 	@Shadow @Final
 	private MinecraftClient client;
 
@@ -41,7 +40,7 @@ public abstract class StatusEffectTimerMixin extends DrawableHelper {
 	}
 
 	@Inject(method = "renderStatusEffectOverlay", at = @At("TAIL"))
-	private void renderDurationOverlay(MatrixStack matrices, CallbackInfo c) {
+	private void renderDurationOverlay(DrawContext context, CallbackInfo ci) {
 		Collection<StatusEffectInstance> collection = this.client.player.getStatusEffects();
 		if (!collection.isEmpty()) {
 			// Replicate vanilla placement algorithm to get the duration
@@ -69,11 +68,11 @@ public abstract class StatusEffectTimerMixin extends DrawableHelper {
 					}
 
 					String duration = getDurationAsString(statusEffectInstance);
-					drawCenteredTextWithShadow(matrices, client.textRenderer, duration, x + 13, y + 14, 0x99FFFFFF);
+					context.drawCenteredTextWithShadow(client.textRenderer, duration, x + 13, y + 14, 0x99FFFFFF);
 
 					String amplifierString = getAmplifierAsString(statusEffectInstance);
 					if (amplifierString != null) {
-						drawCenteredTextWithShadow(matrices, client.textRenderer, amplifierString, x + 19, y + 3, 0x99FFFFFF);
+						context.drawCenteredTextWithShadow(client.textRenderer, amplifierString, x + 19, y + 3, 0x99FFFFFF);
 					}
 				}
 			}
