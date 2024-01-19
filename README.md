@@ -6,7 +6,7 @@
 
 This is a Minecraft mod that overlays a timer on the Vanilla status effect HUD icons.
 
-This mod requires Minecraft 1.16.5-1.19.4 and the Fabric loader.
+This mod requires Minecraft 1.16.5-1.20.x and the Fabric loader.
 
 This mod overlays the number of seconds left of the status effect, or the number of minutes (followed by "m") if it is more than 60 seconds, on the vanilla status effect indicator. If the effect has an amplifier (as in "Haste II"), the amplifier is also overlaid. That's it. This is a very minimalistic mod. No settings are required nor provided.
 
@@ -25,7 +25,7 @@ This is what it looks like when you are using the mod.
 
 The latest version is 1.2.0.
 
-Direct download links for Minecraft 1.19.4:
+Direct download links for Minecraft 1.20.x:
 
 * Download from GitHub: [statuseffecttimer-1.2.0+1.19.4.jar](https://github.com/magicus/statuseffecttimer/releases/download/v1.2.0%2B1.19.4/statuseffecttimer-1.2.0+1.19.4.jar)
 * Download from Modrinth: [statuseffecttimer-1.2.0+1.19.4.jar](https://cdn.modrinth.com/data/T9FDHbY5/versions/Aqavb1JB/statuseffecttimer-1.2.0%2B1.19.4.jar)
