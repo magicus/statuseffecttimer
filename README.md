@@ -27,9 +27,9 @@ The latest version is 1.2.0.
 
 Direct download links for Minecraft 1.20.x:
 
-* Download from GitHub: [statuseffecttimer-1.2.0+1.19.4.jar](https://github.com/magicus/statuseffecttimer/releases/download/v1.2.0%2B1.19.4/statuseffecttimer-1.2.0+1.19.4.jar)
-* Download from Modrinth: [statuseffecttimer-1.2.0+1.19.4.jar](https://cdn.modrinth.com/data/T9FDHbY5/versions/Aqavb1JB/statuseffecttimer-1.2.0%2B1.19.4.jar)
-* Download from CurseForge: [statuseffecttimer-1.2.0+1.19.4.jar](https://edge.forgecdn.net/files/5045/210/statuseffecttimer-1.2.0+1.19.4.jar)
+* Download from GitHub: [statuseffecttimer-1.2.0+1.20.jar](https://github.com/magicus/statuseffecttimer/releases/download/v1.2.0%2B1.20/statuseffecttimer-1.2.0+1.20.jar)
+* Download from Modrinth: [statuseffecttimer-1.2.0+1.20.jar](https://cdn.modrinth.com/data/T9FDHbY5/versions/DmFWEKhc/statuseffecttimer-1.2.0%2B1.20.jar)
+* Download from CurseForge: [statuseffecttimer-1.2.0+1.20.jar](https://edge.forgecdn.net/files/5045/244/statuseffecttimer-1.2.0+1.20.jar)
 
 For all other Minecraft releases, check these download sites:
 * [GitHub releases](https://github.com/magicus/statuseffecttimer/releases)
