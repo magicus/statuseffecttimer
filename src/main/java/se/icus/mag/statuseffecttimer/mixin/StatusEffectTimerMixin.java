@@ -22,7 +22,7 @@ import java.util.List;
 // Set priority to 500, to load before default at 1000. This is to better cooperate with HUDTweaks.
 @Environment(EnvType.CLIENT)
 @Mixin(value = InGameHud.class, priority = 500)
-public abstract class StatusEffectTimerMixin extends DrawableHelper {
+public abstract class StatusEffectTimerMixin {
 	@Shadow @Final
 	private MinecraftClient client;
 
@@ -39,25 +39,28 @@ public abstract class StatusEffectTimerMixin extends DrawableHelper {
 	private void drawStatusEffectOverlay(MatrixStack matrices, StatusEffectInstance statusEffectInstance, int x, int y) {
 		String duration = getDurationAsString(statusEffectInstance);
 		int durationLength = client.textRenderer.getWidth(duration);
-		drawStringWithShadow(matrices, client.textRenderer, duration, x + 13 - (durationLength / 2), y + 14, 0x99FFFFFF);
+		DrawableHelper.drawTextWithShadow(matrices, client.textRenderer, duration, x + 13 - (durationLength / 2), y + 14, 0x99FFFFFF);
 
 		int amplifier = statusEffectInstance.getAmplifier();
 		if (amplifier > 0) {
-			// Most langages has "translations" for amplifier 1-5, converting to roman numerals
-			String amplifierString = (amplifier < 6) ? I18n.translate("potion.potency." + amplifier) : "**";
-			int amplifierLength = client.textRenderer.getWidth(amplifierString);
-			drawStringWithShadow(matrices, client.textRenderer, amplifierString, x + 22 - amplifierLength, y + 3, 0x99FFFFFF);
+            // Convert to roman numerals if possible
+            String amplifierString = (amplifier < 10) ? I18n.translate("enchantment.level." + (amplifier + 1)) : "**";
+            int amplifierLength = client.textRenderer.getWidth(amplifierString);
+			DrawableHelper.drawTextWithShadow(matrices, client.textRenderer, amplifierString, x + 22 - amplifierLength, y + 3, 0x99FFFFFF);
 		}
 	}
 
 	private String getDurationAsString(StatusEffectInstance statusEffectInstance) {
+		if (statusEffectInstance.isInfinite()) {
+			return I18n.translate("effect.duration.infinite");
+		}
+
 		int ticks = MathHelper.floor((float) statusEffectInstance.getDuration());
 		int seconds = ticks / 20;
 
-		if (ticks > 32147) {
-			// Vanilla considers everything above this to be infinite
-			return "**";
-		} else if (seconds > 60) {
+		if (seconds >= 3600) {
+			return seconds / 3600 + "h";
+		} else if (seconds >= 60) {
 			return seconds / 60 + "m";
 		} else {
 			return String.valueOf(seconds);
