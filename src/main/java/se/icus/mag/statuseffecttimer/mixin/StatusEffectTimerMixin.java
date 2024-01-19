@@ -1,6 +1,6 @@
 package se.icus.mag.statuseffecttimer.mixin;
 
-import com.google.common.collect.Ordering;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -8,7 +8,6 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.NotNull;
@@ -19,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Collection;
+import java.util.List;
 
 // Set priority to 500, to load before default at 1000. This is to better cooperate with HUDTweaks.
 @Environment(EnvType.CLIENT)
@@ -28,38 +27,14 @@ public abstract class StatusEffectTimerMixin extends DrawableHelper {
 	@Shadow @Final
 	private MinecraftClient client;
 
-	@Inject(method = "renderStatusEffectOverlay", at = @At("TAIL"))
-	private void renderDurationOverlay(MatrixStack matrices, CallbackInfo c) {
-		Collection<StatusEffectInstance> collection = this.client.player.getStatusEffects();
-		if (!collection.isEmpty()) {
-			// Replicate vanilla placement algorithm to get the duration
-			// labels to line up exactly right.
-
-			int beneficialCount = 0;
-			int nonBeneficialCount = 0;
-			for (StatusEffectInstance statusEffectInstance : Ordering.natural().reverse().sortedCopy(collection)) {
-				StatusEffect statusEffect = statusEffectInstance.getEffectType();
-				if (statusEffectInstance.shouldShowIcon()) {
-					int x = this.client.getWindow().getScaledWidth();
-					int y = 1;
-
-					if (this.client.isDemo()) {
-						y += 15;
-					}
-
-					if (statusEffect.isBeneficial()) {
-						beneficialCount++;
-						x -= 25 * beneficialCount;
-					} else {
-						nonBeneficialCount++;
-						x -= 25 * nonBeneficialCount;
-						y += 26;
-					}
-
-					drawStatusEffectOverlay(matrices, statusEffectInstance, x, y);
-				}
-			}
-		}
+	@Inject(method = "renderStatusEffectOverlay",
+			at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", shift = At.Shift.AFTER))
+	private void appendOverlayDrawing(MatrixStack matrices, CallbackInfo c,
+									  @Local List<Runnable> list, @Local StatusEffectInstance statusEffectInstance,
+									  @Local(ordinal = 4) int x, @Local(ordinal = 3) int y) {
+		list.add(() -> {
+			drawStatusEffectOverlay(matrices, statusEffectInstance, x, y);
+		});
 	}
 
 	private void drawStatusEffectOverlay(MatrixStack matrices, StatusEffectInstance statusEffectInstance, int x, int y) {

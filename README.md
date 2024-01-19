@@ -23,7 +23,7 @@ This is what it looks like when you are using the mod.
 
 ## Download
 
-The latest version is 1.1.1. 
+The latest version is 1.2.0.
 
 Direct download links for Minecraft 1.19:
 
