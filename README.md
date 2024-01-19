@@ -38,8 +38,7 @@ For all other Minecraft releases, check these download sites:
 
 ## Installation
 
-Install this as you would any other Fabric mod. (Personally, I recommend MultiMC as Minecraft launcher for modded Minecraft.)
-[I still need help installing this mod.](https://lmgtfy.app/?q=how+to+install+minecraft+fabric+mods)
+Install this as you would any other Fabric mod. (I recommend using [Prism Launcher](https://prismlauncher.org/) as Minecraft launcher for modded Minecraft.)
 
 ## Support
 
