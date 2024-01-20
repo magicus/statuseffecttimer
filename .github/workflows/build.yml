@@ -15,13 +15,13 @@ jobs:
       - name: Check out source code
         uses: actions/checkout@v4
 
-      - name: Validate gradle wrapper
+      - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@v1
 
       - name: Setup JDK
         uses: actions/setup-java@v4
         with:
-          distribution: "oracle"
+          distribution: "temurin"
           java-version: "${{env.JAVA_VERSION}}"
 
       - name: Setup Gradle
