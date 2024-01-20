@@ -1,10 +1,9 @@
 {
   "required": true,
-  "minVersion": "0.8",
-  "package": "se.icus.mag.statuseffecttimer",
-  "compatibilityLevel": "JAVA_8",
+  "package": "se.icus.mag.statuseffecttimer.mixin",
+  "compatibilityLevel": "JAVA_17",
   "client": [
-    "mixin.StatusEffectTimerMixin"
+    "StatusEffectTimerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
