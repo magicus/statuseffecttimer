@@ -1,0 +1,87 @@
+name: Release on tag
+
+on:
+  push:
+    tags:
+      - '*'
+
+env:
+  JAVA_VERSION: 17
+  MODRINTH_ID: 'T9FDHbY5'
+  CURSEFORGE_ID: '484738'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v4
+
+      - name: Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '${{env.JAVA_VERSION}}'
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: Build with Gradle
+        run: gradle build
+
+      - name: Get version numbers from tag
+        id: version
+        run: |
+          # Extract mod and minecraft version from tag
+          mod_version=${GITHUB_REF_NAME//@(*v|+*)}
+          minecraft_version=${GITHUB_REF_NAME#*+}
+          echo "mod=$mod_version" >> $GITHUB_OUTPUT
+          echo "minecraft=$minecraft_version" >> $GITHUB_OUTPUT
+          echo "full=$mod_version+$minecraft_version" >> $GITHUB_OUTPUT
+          echo Mod version: $mod_version
+          echo Minecraft version: $minecraft_version
+
+      - name: Install parse-changelog
+        uses: taiki-e/install-action@v2
+        with:
+          tool: parse-changelog
+
+      - name: Parse changelog
+        id: changelog
+        run: |
+          # Extract the changelog entry for this release
+          mkdir -p output
+          changelog=output/changelog.md
+          parse-changelog CHANGELOG.md ${{ steps.version.outputs.full }} > $changelog
+          if [[ ! -s $changelog ]]; then
+            # No changelog for specific version (mod+minecraft), try just mod version
+            parse-changelog CHANGELOG.md ${{ steps.version.outputs.mod }} > $changelog
+          fi
+          echo Extracted changelog for this release:
+          cat $changelog
+          echo "file=$changelog" >> $GITHUB_OUTPUT
+
+      - name: Publish release
+        id: publish
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-id: ${{ env.MODRINTH_ID }}
+          curseforge-id: ${{ env.CURSEFORGE_ID }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          name: Status Effect Timer ${{ steps.version.outputs.full }}
+          version: ${{ steps.version.outputs.full }}
+          version-type: release
+          changelog-file: ${{ steps.changelog.outputs.file }}
+
+      - name: Show results
+        run: |
+          # Show results from mc-publish
+          echo Successfully published Status Effect Timer ${{ steps.version.outputs.full }}
+          echo Modrinth release ${{ steps.publish.outputs.modrinth-version }}: ${{ steps.publish.outputs.modrinth-url }}
+          echo CurseForge release ${{ steps.publish.outputs.curseforge-version }}: ${{ steps.publish.outputs.curseforge-url }}
+          echo GitHub release ${{ steps.publish.outputs.github-tag }}: ${{ steps.publish.outputs.github-url }}
