@@ -73,7 +73,7 @@ jobs:
           github-token: ${{ secrets.MY_GITHUB_TOKEN }}
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-          name: Status Effect Timer ${{ steps.version.outputs.full }}
+          name: Status Effect Timer ${{ steps.version.outputs.mod }} (${{ steps.version.outputs.minecraft }})
           version: ${{ steps.version.outputs.full }}
           version-type: release
           changelog-file: ${{ steps.changelog.outputs.file }}
