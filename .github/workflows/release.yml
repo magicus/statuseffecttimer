@@ -70,7 +70,7 @@ jobs:
         with:
           modrinth-id: ${{ env.MODRINTH_ID }}
           curseforge-id: ${{ env.CURSEFORGE_ID }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.MY_GITHUB_TOKEN }}
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
           name: Status Effect Timer ${{ steps.version.outputs.full }}
