@@ -1,6 +1,7 @@
 name: Release on tag
 
 on:
+  workflow_dispatch:
   push:
     tags:
       - '*'
@@ -36,7 +37,8 @@ jobs:
         id: version
         run: |
           # Extract mod and minecraft version from tag
-          mod_version=${GITHUB_REF_NAME//@(*v|+*)}
+          mod_version=${GITHUB_REF_NAME#v}
+          mod_version="${mod_version%+*}"
           minecraft_version=${GITHUB_REF_NAME#*+}
           echo "mod=$mod_version" >> $GITHUB_OUTPUT
           echo "minecraft=$minecraft_version" >> $GITHUB_OUTPUT
@@ -51,14 +53,18 @@ jobs:
 
       - name: Parse changelog
         id: changelog
+        continue-on-error: true
         run: |
           # Extract the changelog entry for this release
           mkdir -p output
           changelog=output/changelog.md
-          parse-changelog CHANGELOG.md ${{ steps.version.outputs.full }} > $changelog
+          parse-changelog CHANGELOG.md ${{ steps.version.outputs.full }} > $changelog || true
           if [[ ! -s $changelog ]]; then
             # No changelog for specific version (mod+minecraft), try just mod version
-            parse-changelog CHANGELOG.md ${{ steps.version.outputs.mod }} > $changelog
+            parse-changelog CHANGELOG.md ${{ steps.version.outputs.mod }} > $changelog || true
+          fi
+          if [[ ! -s $changelog ]]; then
+            echo "No changelog available" > $changelog
           fi
           echo Extracted changelog for this release:
           cat $changelog
