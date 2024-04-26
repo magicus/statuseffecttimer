@@ -27,7 +27,7 @@ public abstract class StatusEffectTimerMixin {
 
 	@Inject(method = "renderStatusEffectOverlay",
 			at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", shift = At.Shift.AFTER))
-	private void appendOverlayDrawing(DrawContext context, CallbackInfo c,
+	private void appendOverlayDrawing(DrawContext context, float tickDelta, CallbackInfo c,
 									  @Local List<Runnable> list, @Local StatusEffectInstance statusEffectInstance,
 									  @Local(ordinal = 4) int x, @Local(ordinal = 3) int y) {
 		list.add(() -> {
