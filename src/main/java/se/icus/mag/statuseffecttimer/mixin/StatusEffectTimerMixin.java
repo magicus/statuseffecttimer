@@ -27,13 +27,13 @@ public abstract class StatusEffectTimerMixin {
 	private MinecraftClient client;
 
 	@Inject(method = "renderStatusEffectOverlay",
-			at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", shift = At.Shift.AFTER))
+			at = @At(value = "INVOKE",
+					target = "Lnet/minecraft/client/gui/DrawContext;drawGuiTexture(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/util/Identifier;IIIII)V",
+					shift = At.Shift.AFTER))
 	private void appendOverlayDrawing(DrawContext context, RenderTickCounter tickCounter, CallbackInfo c,
-									  @Local List<Runnable> list, @Local StatusEffectInstance statusEffectInstance,
-									  @Local(ordinal = 4) int x, @Local(ordinal = 3) int y) {
-		list.add(() -> {
-			drawStatusEffectOverlay(context, statusEffectInstance, x, y);
-		});
+									  @Local StatusEffectInstance statusEffectInstance,
+									  @Local(ordinal = 2) int x, @Local(ordinal = 3) int y) {
+		drawStatusEffectOverlay(context, statusEffectInstance, x, y);
 	}
 
 	private void drawStatusEffectOverlay(DrawContext context, StatusEffectInstance statusEffectInstance, int x, int y) {
