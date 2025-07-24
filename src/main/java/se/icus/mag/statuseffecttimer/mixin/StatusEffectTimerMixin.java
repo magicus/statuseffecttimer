@@ -38,13 +38,13 @@ public abstract class StatusEffectTimerMixin {
 	private void drawStatusEffectOverlay(DrawContext context, StatusEffectInstance statusEffectInstance, int x, int y) {
 		String duration = getDurationAsString(statusEffectInstance);
 		int durationLength = client.textRenderer.getWidth(duration);
-        context.drawTextWithShadow(client.textRenderer, duration, x + 13 - (durationLength / 2), y + 14, 0x99FFFFFF);
+		context.drawTextWithShadow(client.textRenderer, duration, x + 13 - (durationLength / 2), y + 14, 0x99FFFFFF);
 
 		int amplifier = statusEffectInstance.getAmplifier();
 		if (amplifier > 0) {
-            // Convert to roman numerals if possible
-            String amplifierString = (amplifier < 10) ? I18n.translate("enchantment.level." + (amplifier + 1)) : "**";
-            int amplifierLength = client.textRenderer.getWidth(amplifierString);
+			// Convert to roman numerals if possible
+			String amplifierString = (amplifier < 10) ? I18n.translate("enchantment.level." + (amplifier + 1)) : "**";
+			int amplifierLength = client.textRenderer.getWidth(amplifierString);
 			context.drawTextWithShadow(client.textRenderer, amplifierString, x + 22 - amplifierLength, y + 3, 0x99FFFFFF);
 		}
 	}
