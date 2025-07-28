@@ -4,6 +4,8 @@
 [![CurseForge](https://img.shields.io/curseforge/dt/484738?logo=curseforge)](https://www.curseforge.com/minecraft/mc-mods/status-effect-timer)
 [![GitHub](https://img.shields.io/github/downloads/magicus/statuseffecttimer/total?logo=github)](https://github.com/magicus/statuseffecttimer/releases)
 
+![Logo](docs/logo.png)
+
 This is a Minecraft mod for Fabric that overlays a timer on the Vanilla status effect HUD icons.
 
 This mod overlays the time left of the status effect on the vanilla indicator. If the effect has an amplifier (as in "Haste II"), the amplifier is also overlaid. That's it. This is a very minimalistic mod. No settings are required nor provided.
@@ -42,4 +44,4 @@ Do you have any problems with the mod? Please open an issue here on Github.
 
 This mod does not work if the mod ['Slight' Gui Modifications](https://github.com/shedaniel/slight-gui-modifications) is installed and the configuration `fluidStatusEffects` is enabled.
 
-This mod conflicts with [Giselbaer's Durability Viewer](https://github.com/gbl/DurabilityViewer), since that mod also draws a timer on the status effect icon. You need to disable the effect time feature in Durability Viewer to avoid clutter. 
+This mod conflicts with [Giselbaer's Durability Viewer](https://github.com/gbl/DurabilityViewer), since that mod also draws a timer on the status effect icon. You need to disable the effect time feature in Durability Viewer to avoid clutter.
