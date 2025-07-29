@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.0+1.20.5 - 2025-07-29
+
+### Added
+
+- Internal refactoring to allow for interoperability with other mods
+
 ## 1.2.0+1.20.5 - 2024-04-26
 
 ### Added
