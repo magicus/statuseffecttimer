@@ -3,11 +3,11 @@ package se.icus.mag.statuseffecttimer.mixin;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.hud.InGameHud;
-import net.minecraft.client.render.RenderTickCounter;
-import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.DeltaTracker;
+import net.minecraft.world.effect.MobEffectInstance;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -19,21 +19,21 @@ import se.icus.mag.statuseffecttimer.StatusEffectTimerRenderer;
 
 // Set priority to 500, to load before default at 1000. This is to better cooperate with HUDTweaks.
 @Environment(EnvType.CLIENT)
-@Mixin(value = InGameHud.class, priority = 500)
+@Mixin(value = Gui.class, priority = 500)
 public abstract class StatusEffectTimerMixin {
 	@Unique
 	private StatusEffectTimerRenderer renderer = new StatusEffectTimerRenderer();
 
 	@Shadow @Final
-	private MinecraftClient client;
+	private Minecraft minecraft;
 
-	@Inject(method = "renderStatusEffectOverlay",
+	@Inject(method = "extractEffects",
 			at = @At(value = "INVOKE",
-					target = "Lnet/minecraft/client/gui/DrawContext;drawGuiTexture(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/util/Identifier;IIIII)V",
+					target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIIII)V",
 					shift = At.Shift.AFTER))
-	private void appendOverlayDrawing(DrawContext context, RenderTickCounter tickCounter, CallbackInfo c,
-									  @Local StatusEffectInstance statusEffectInstance,
-									  @Local(ordinal = 2) int x, @Local(ordinal = 3) int y) {
-		renderer.drawStatusEffectOverlay(client, context, statusEffectInstance, x, y);
+	private void onExtractEffects(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker, CallbackInfo c,
+	                                  @Local MobEffectInstance statusEffectInstance,
+	                                  @Local(ordinal = 2) int x, @Local(ordinal = 3) int y) {
+		renderer.drawStatusEffectOverlay(minecraft, graphics, statusEffectInstance, x, y);
 	}
 }
