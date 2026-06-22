@@ -5,7 +5,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.Hud;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.world.effect.MobEffectInstance;
 import org.spongepowered.asm.mixin.Final;
@@ -19,7 +19,7 @@ import se.icus.mag.statuseffecttimer.StatusEffectTimerRenderer;
 
 // Set priority to 500, to load before default at 1000. This is to better cooperate with HUDTweaks.
 @Environment(EnvType.CLIENT)
-@Mixin(value = Gui.class, priority = 500)
+@Mixin(value = Hud.class, priority = 500)
 public abstract class StatusEffectTimerMixin {
 	@Unique
 	private StatusEffectTimerRenderer renderer = new StatusEffectTimerRenderer();
