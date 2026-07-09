@@ -47,3 +47,19 @@ This mod does not work if the mod ['Slight' Gui Modifications](https://github.co
 This mod conflicts with [Giselbaer's Durability Viewer](https://github.com/gbl/DurabilityViewer), since that mod also draws a timer on the status effect icon. You need to disable the effect time feature in Durability Viewer to avoid clutter.
 
 If you are using the Feather Client, you need to go to **General > Vanilla Effect Overlay** and select "Off" or "Bar". 
+
+## Other Mods
+
+Check out my other mods, which also supplies vanilla-style usability enhancements:
+
+### Mod Settings
+
+![Logo](https://raw.githubusercontent.com/magicus/ModSettings/master/docs/logo.png)
+
+[Mod Settings](https://github.com/magicus/ModSettings) is a Minecraft mod for Fabric that provides an easy to access configuration screen for all installed mods.
+
+### Elytra Indicators
+
+![Logo](https://raw.githubusercontent.com/magicus/ElytraIndicators/master/docs/logo.png)
+
+[Elytra Indicators](https://github.com/magicus/ElytraIndicators) is a Minecraft mod for Fabric that provides Vanilla-style "fly by instrument" support for elytra flight.
