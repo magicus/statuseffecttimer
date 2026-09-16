@@ -7,9 +7,10 @@ on:
       - '*'
 
 env:
-  JAVA_VERSION: 25
+  MOD_NAME: Status Effect Timer
   MODRINTH_ID: 'T9FDHbY5'
   CURSEFORGE_ID: '484738'
+  JAVA_VERSION: 25
 
 jobs:
   build-and-release:
@@ -31,7 +32,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v6
 
       - name: Build with Gradle
-        run: gradle build
+        run: ./gradlew build
 
       - name: Get version numbers from tag
         id: version
@@ -72,14 +73,14 @@ jobs:
 
       - name: Publish release
         id: publish
-        uses: Kir-Antipov/mc-publish@v3.3
+        uses: Kira-NT/mc-publish@v3.3
         with:
           modrinth-id: ${{ env.MODRINTH_ID }}
           curseforge-id: ${{ env.CURSEFORGE_ID }}
           github-token: ${{ secrets.MY_GITHUB_TOKEN }}
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-          name: Status Effect Timer ${{ steps.version.outputs.mod }} (${{ steps.version.outputs.minecraft }})
+          name: ${{ env.MOD_NAME }} ${{ steps.version.outputs.mod }} (${{ steps.version.outputs.minecraft }})
           version: ${{ steps.version.outputs.full }}
           version-type: release
           changelog-file: ${{ steps.changelog.outputs.file }}
@@ -87,7 +88,7 @@ jobs:
       - name: Show results
         run: |
           # Show results from mc-publish
-          echo Successfully published Status Effect Timer ${{ steps.version.outputs.full }}
+          echo Successfully published ${{ env.MOD_NAME }} ${{ steps.version.outputs.full }}
           echo Modrinth release ${{ steps.publish.outputs.modrinth-version }}: ${{ steps.publish.outputs.modrinth-url }}
           echo CurseForge release ${{ steps.publish.outputs.curseforge-version }}: ${{ steps.publish.outputs.curseforge-url }}
           echo GitHub release ${{ steps.publish.outputs.github-tag }}: ${{ steps.publish.outputs.github-url }}

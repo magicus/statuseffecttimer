@@ -2,7 +2,6 @@
   "schemaVersion": 1,
   "id": "statuseffecttimer",
   "version": "${mod_version}",
-
   "name": "Status Effect Timer",
   "description": "Overlay a timer on the Vanilla status effect HUD icons",
   "authors": [
@@ -13,16 +12,12 @@
     "issues": "https://github.com/magicus/statuseffecttimer/issues",
     "sources": "https://github.com/magicus/statuseffecttimer"
   },
-
-  "license": "LGPLv3",
+  "license": "LGPL-3.0-only",
   "icon": "assets/statuseffecttimer/icon.png",
-
   "environment": "client",
-
   "mixins": [
     "statuseffecttimer.mixins.json"
   ],
-
   "depends": {
     "minecraft": "${supported_minecraft_versions}",
     "fabricloader": ">=${loader_version}"

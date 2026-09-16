@@ -28,7 +28,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v6
 
       - name: Build with Gradle
-        run: gradle build
+        run: ./gradlew build
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v7
