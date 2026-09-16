@@ -1,6 +1,6 @@
 plugins {
 	id 'java'
-	id 'net.fabricmc.fabric-loom' version '1.17-SNAPSHOT'
+	id 'net.fabricmc.fabric-loom' version "${loom_version}"
 }
 
 dependencies {
@@ -8,17 +8,22 @@ dependencies {
 	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
 }
 
-version = "${project.mod_version}+${project.minecraft_version}"
+ext.mod_version = "${project.mod_base_version}+${project.minecraft_version}"
+version = ext.mod_version
 
 processResources {
-	inputs.property "version", project.version
+	inputs.properties([
+			"mod_version": project.mod_version,
+			"supported_minecraft_versions": project.supported_minecraft_versions,
+			"loader_version": project.loader_version,
+	])
 
 	filesMatching("fabric.mod.json") {
-		expand "mod_version": project.version
-	}
-
-	filesMatching("*.mixins.json") {
-		expand "java_version": project.java_version
+		expand([
+				mod_version: project.mod_version,
+				supported_minecraft_versions: project.supported_minecraft_versions,
+				loader_version: project.loader_version,
+		])
 	}
 }
 

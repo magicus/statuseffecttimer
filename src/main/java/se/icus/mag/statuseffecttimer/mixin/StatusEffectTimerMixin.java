@@ -29,7 +29,7 @@ public abstract class StatusEffectTimerMixin {
 
 	@Inject(method = "extractEffects",
 			at = @At(value = "INVOKE",
-					target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIIII)V",
+					target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIIII)V",
 					shift = At.Shift.AFTER))
 	private void onExtractEffects(GuiGraphicsExtractor context, DeltaTracker deltaTracker, CallbackInfo c,
 	                                  @Local MobEffectInstance statusEffectInstance,
