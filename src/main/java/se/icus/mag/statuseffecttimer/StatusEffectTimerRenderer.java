@@ -3,11 +3,12 @@ package se.icus.mag.statuseffecttimer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.util.Mth;
+import net.minecraft.world.effect.MobEffectInstance;
 
 public class StatusEffectTimerRenderer {
-    public void drawStatusEffectOverlay(Minecraft client, GuiGraphicsExtractor context, MobEffectInstance statusEffectInstance, int x, int y) {
+    public void drawStatusEffectOverlay(
+            Minecraft client, GuiGraphicsExtractor context, MobEffectInstance statusEffectInstance, int x, int y) {
         String duration = getDurationAsString(statusEffectInstance);
         int durationLength = client.font.width(duration);
         context.text(client.font, duration, x + 13 - (durationLength / 2), y + 14, 0x99FFFFFF);

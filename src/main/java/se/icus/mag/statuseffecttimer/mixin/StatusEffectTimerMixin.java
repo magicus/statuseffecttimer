@@ -21,19 +21,28 @@ import se.icus.mag.statuseffecttimer.StatusEffectTimerRenderer;
 @Environment(EnvType.CLIENT)
 @Mixin(value = Hud.class, priority = 500)
 public abstract class StatusEffectTimerMixin {
-	@Unique
-	private StatusEffectTimerRenderer renderer = new StatusEffectTimerRenderer();
+    @Unique
+    private StatusEffectTimerRenderer renderer = new StatusEffectTimerRenderer();
 
-	@Shadow @Final
-	private Minecraft minecraft;
+    @Shadow
+    @Final
+    private Minecraft minecraft;
 
-	@Inject(method = "extractEffects",
-			at = @At(value = "INVOKE",
-					target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIIII)V",
-					shift = At.Shift.AFTER))
-	private void onExtractEffects(GuiGraphicsExtractor context, DeltaTracker deltaTracker, CallbackInfo c,
-	                                  @Local MobEffectInstance statusEffectInstance,
-	                                  @Local(ordinal = 2) int x, @Local(ordinal = 3) int y) {
-		renderer.drawStatusEffectOverlay(minecraft, context, statusEffectInstance, x, y);
-	}
+    @Inject(
+            method = "extractEffects",
+            at =
+                    @At(
+                            value = "INVOKE",
+                            target =
+                                    "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIIII)V",
+                            shift = At.Shift.AFTER))
+    private void onExtractEffects(
+            GuiGraphicsExtractor context,
+            DeltaTracker deltaTracker,
+            CallbackInfo c,
+            @Local MobEffectInstance statusEffectInstance,
+            @Local(ordinal = 2) int x,
+            @Local(ordinal = 3) int y) {
+        renderer.drawStatusEffectOverlay(minecraft, context, statusEffectInstance, x, y);
+    }
 }
