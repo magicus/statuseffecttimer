@@ -31,3 +31,8 @@ bin/
 # fabric
 
 run/
+logs/
+
+# misc
+backup/
+remappedSrc/

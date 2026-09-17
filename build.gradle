@@ -11,6 +11,10 @@ dependencies {
 ext.mod_version = "${project.mod_base_version}+${project.minecraft_version}"
 version = ext.mod_version
 
+loom {
+    clientOnlyMinecraftJar()
+}
+
 processResources {
     inputs.properties([
         "mod_version": project.mod_version,
@@ -60,6 +64,11 @@ spotless {
         custom "No empty line after opening curly brace", {
             it.replaceAll(/\{\n\n/, '{\n')
         }
+        licenseHeader("/*\n" +
+                " * Copyright © Magnus Ihse Bursie \$YEAR.\n" +
+                " * This file is released under LGPLv3. See LICENSE for full license details.\n" +
+                " */")
+                .updateYearWithLatest(true)
     }
     json {
         target "**/*.json"
